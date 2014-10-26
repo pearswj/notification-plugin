@@ -167,21 +167,24 @@ public class BuildState {
         for ( Entry entry : s3Publisher.getEntries()) {
 
             if ( isEmpty( entry.sourceFile, entry.selectedRegion, entry.bucket )){ continue; }
-            String fileName = new File( entry.sourceFile ).getName();
-            if ( isEmpty( fileName )){ continue; }
+            
+            for ( String fileName : entry.paths ) {
+                //String fileName = new File( entry.sourceFile ).getName();
+                if ( isEmpty( fileName )){ continue; }
 
-            // https://s3-eu-west-1.amazonaws.com/evgenyg-temp/
-            String bucketUrl = String.format( "https://s3-%s.amazonaws.com/%s",
-                                              entry.selectedRegion.toLowerCase().replace( '_', '-' ),
-                                              entry.bucket );
+                // https://s3-eu-west-1.amazonaws.com/evgenyg-temp/
+                String bucketUrl = String.format( "https://s3-%s.amazonaws.com/%s",
+                                                  entry.selectedRegion.toLowerCase().replace( '_', '-' ),
+                                                  entry.bucket );
 
-            String fileUrl   = entry.managedArtifacts ?
-                // https://s3-eu-west-1.amazonaws.com/evgenyg-temp/jobs/notification-plugin/21/notification.hpi
-                String.format( "%s/jobs/%s/%s/%s", bucketUrl, job.getName(), run.getNumber(), fileName ) :
-                // https://s3-eu-west-1.amazonaws.com/evgenyg-temp/notification.hpi
-                String.format( "%s/%s", bucketUrl, fileName );
+                String fileUrl   = entry.managedArtifacts ?
+                    // https://s3-eu-west-1.amazonaws.com/evgenyg-temp/jobs/notification-plugin/21/notification.hpi
+                    String.format( "%s/jobs/%s/%s/%s", bucketUrl, job.getName(), run.getNumber(), fileName ) :
+                    // https://s3-eu-west-1.amazonaws.com/evgenyg-temp/notification.hpi
+                    String.format( "%s/%s", bucketUrl, fileName );
 
-            updateArtifact( fileName, "s3", fileUrl );
+                updateArtifact( fileName, "s3", fileUrl );
+            }
         }
     }
 
