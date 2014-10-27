@@ -167,6 +167,7 @@ public class BuildState {
         for ( Entry entry : s3Publisher.getEntries()) {
 
             if ( isEmpty( entry.sourceFile, entry.selectedRegion, entry.bucket )){ continue; }
+            if ( entry.paths == null ){ continue; }
             
             for ( String fileName : entry.paths ) {
                 //String fileName = new File( entry.sourceFile ).getName();
