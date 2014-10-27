@@ -39,6 +39,10 @@
                 <enabled>false</enabled>
             </snapshots>
         </pluginRepository>
+        <pluginRepository>
+            <id>my-local-repo</id>
+            <url>file://${basedir}/repo</url>
+        </pluginRepository>
     </pluginRepositories>
 
     <build>
@@ -82,7 +86,7 @@
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>s3</artifactId>
-            <version>0.6</version>
+            <version>0.7-SNAPSHOT</version>
             <optional>true</optional>
         </dependency>
     </dependencies>
